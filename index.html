@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yandex Plus Offer API</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace" aria-label="Offer prediction workspace">
+        <div class="intro">
+          <p class="eyebrow">Yandex Plus API</p>
+          <h1>Прототип оценки офера</h1>
+          <p>
+            Введите параметры пользователя и офера. Модель вернет массив из
+            двух вероятностей: `[возьмет офер, воспользуется офером]`.
+          </p>
+        </div>
+
+        <form class="form" id="prediction-form">
+          <fieldset>
+            <legend>Пользователь</legend>
+            <div class="grid">
+              <label>
+                ID пользователя
+                <input name="user_id" type="number" min="1" value="5" required />
+              </label>
+
+              <label>
+                Доход
+                <select name="income">
+                  <option value="low">low</option>
+                  <option value="middle" selected>middle</option>
+                  <option value="high">high</option>
+                </select>
+              </label>
+
+              <label>
+                Возраст
+                <select name="age">
+                  <option value="18-25">18-25</option>
+                  <option value="25-30">25-30</option>
+                  <option value="30-40" selected>30-40</option>
+                  <option value="40-50">40-50</option>
+                  <option value="50+">50+</option>
+                </select>
+              </label>
+
+              <label>
+                Город
+                <select name="city">
+                  <option value="capitals" selected>capitals</option>
+                  <option value="million_plus">million_plus</option>
+                  <option value="regional">regional</option>
+                </select>
+              </label>
+
+              <label>
+                Устройство
+                <select name="device_type">
+                  <option value="mobile" selected>mobile</option>
+                  <option value="desktop">desktop</option>
+                  <option value="tablet">tablet</option>
+                </select>
+              </label>
+
+              <label>
+                ОС
+                <select name="mobile_os">
+                  <option value="ios" selected>ios</option>
+                  <option value="android">android</option>
+                  <option value="other">other</option>
+                </select>
+              </label>
+
+              <label>
+                Интернет
+                <select name="internet_usage">
+                  <option value="low">low</option>
+                  <option value="medium">medium</option>
+                  <option value="heavy" selected>heavy</option>
+                </select>
+              </label>
+
+              <label>
+                Онлайн-покупки
+                <select name="online_shopping_frequency">
+                  <option value="low">low</option>
+                  <option value="medium">medium</option>
+                  <option value="high" selected>high</option>
+                </select>
+              </label>
+
+              <label>
+                Чувствительность к промо
+                <select name="promo_sensitivity">
+                  <option value="low" selected>low</option>
+                  <option value="medium">medium</option>
+                  <option value="high">high</option>
+                </select>
+              </label>
+
+              <label>
+                Способ оплаты
+                <select name="preferred_payment_method">
+                  <option value="card">card</option>
+                  <option value="sbp" selected>sbp</option>
+                  <option value="cash">cash</option>
+                </select>
+              </label>
+
+              <label class="toggle">
+                <input name="subscription_user" type="checkbox" />
+                <span>Пользователь подписки</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Интересы</legend>
+            <div class="grid">
+              <label>
+                Еда
+                <select name="food_delivery_interest">
+                  <option value="low">low</option>
+                  <option value="medium">medium</option>
+                  <option value="high" selected>high</option>
+                </select>
+              </label>
+
+              <label>
+                Лавка
+                <select name="grocery_delivery_interest">
+                  <option value="low">low</option>
+                  <option value="medium">medium</option>
+                  <option value="high" selected>high</option>
+                </select>
+              </label>
+
+              <label>
+                Такси
+                <select name="taxi_usage_frequency">
+                  <option value="low" selected>low</option>
+                  <option value="medium">medium</option>
+                  <option value="high">high</option>
+                </select>
+              </label>
+
+              <label>
+                Маркетплейс
+                <select name="marketplace_interest">
+                  <option value="low">low</option>
+                  <option value="medium">medium</option>
+                  <option value="high" selected>high</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Офер</legend>
+            <div class="grid">
+              <label>
+                Сервис
+                <select name="offer_service_name">
+                  <option value="eda" selected>eda</option>
+                  <option value="taxi">taxi</option>
+                  <option value="lavka">lavka</option>
+                  <option value="market">market</option>
+                </select>
+              </label>
+
+              <label>
+                Поверхность
+                <select name="offer_surface">
+                  <option value="selector" selected>selector</option>
+                  <option value="mission">mission</option>
+                  <option value="push">push</option>
+                </select>
+              </label>
+
+              <label>
+                Тип офера
+                <select name="offer_type">
+                  <option value="cashback" selected>cashback</option>
+                  <option value="points">points</option>
+                  <option value="discount">discount</option>
+                </select>
+              </label>
+
+              <label>
+                Размер офера
+                <input name="offer_amount" type="number" min="0" step="1" value="29" />
+              </label>
+
+              <label>
+                CAC
+                <input name="offer_cac" type="number" min="0" step="1" value="300" />
+              </label>
+            </div>
+          </fieldset>
+
+          <button class="submit" type="submit">Рассчитать</button>
+        </form>
+
+        <aside class="result" aria-live="polite">
+          <div>
+            <p class="eyebrow">Ответ модели</p>
+            <output id="result-array">[0.00, 0.00]</output>
+          </div>
+
+          <div class="probabilities">
+            <div>
+              <span>Возьмет офер</span>
+              <strong id="take-probability">0%</strong>
+            </div>
+            <div>
+              <span>Воспользуется</span>
+              <strong id="use-probability">0%</strong>
+            </div>
+          </div>
+
+          <div>
+            <p class="eyebrow">Payload</p>
+            <textarea
+              id="payload-editor"
+              spellcheck="false"
+              aria-label="Payload JSON editor"
+            >{}</textarea>
+            <p class="payload-error" id="payload-error" role="status"></p>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
